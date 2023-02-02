@@ -34,14 +34,26 @@ app.use(express.json());
 app.use(cors());
 
 
-app.get('/', (req, res) => {
-  res.send('ok');
+// app.get('/', (req, res) => {
+//   res.send('ok');
+// })
+
+app.get('/allinfo', (req, res) => {
+  db.raw('select * from recept')
+    .then(allInfo => {
+      res.send(allInfo.rows)
+    })
 })
 
 
-app.post('/test', (req, res) => {
+app.post('/allinfo', (req, res) => {
   db('recept').insert({
     maträtt: req.body.maträtt,
+    recept: req.body.recept,
+    kommentar: req.body.kommentar,
+    betyg: req.body.betyg,
+    namn: req.body.namn,
+    datum: new Date()
   })
     .then(function () {
       db.select().from('recept')
@@ -51,6 +63,15 @@ app.post('/test', (req, res) => {
     })
 })
 
+
+app.delete('/allinfo/:id', (req, res) => {
+  db('recept')
+    .where('id', req.params.id)
+    .del()
+    .then(x => {
+      res.json({ succsess: true })
+    })
+})
 
 
 
