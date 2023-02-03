@@ -34,21 +34,10 @@ app.use(express.json());
 app.use(cors());
 
 
-// app.get('/', (req, res) => {
-//   res.send('ok');
-// })
-
-// app.get('/allinfo', (req, res) => {
-//   db.raw('select * from recept')
-//     .then(allInfo => {
-//       res.send(allInfo.rows)
-//     })
-// })
-
 /////Get all info att startup/////
 app.put('/allinfo', (req, res) => {
   const id = req.params
-  db.select('*').from('recept')
+  db.select('*').from('recept').orderBy('betyg')
     .where('id' !== '')
     .then(allInfo => {
       res.json(allInfo)
