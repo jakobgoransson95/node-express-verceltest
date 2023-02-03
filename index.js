@@ -38,14 +38,24 @@ app.use(cors());
 //   res.send('ok');
 // })
 
-app.get('/allinfo', (req, res) => {
-  db.raw('select * from recept')
+// app.get('/allinfo', (req, res) => {
+//   db.raw('select * from recept')
+//     .then(allInfo => {
+//       res.send(allInfo.rows)
+//     })
+// })
+
+/////Get all info att startup/////
+app.put('/allinfo', (req, res) => {
+  const id = req.params
+  db.select('*').from('recept')
+    .where('id' !== '')
     .then(allInfo => {
-      res.send(allInfo.rows)
+      res.json(allInfo)
     })
 })
 
-
+//////Lägg till ny ///////
 app.post('/allinfo', (req, res) => {
   db('recept').insert({
     maträtt: req.body.maträtt,
@@ -73,6 +83,16 @@ app.delete('/allinfo/:id', (req, res) => {
     })
 })
 
+
+/////Hämta 1 id /////
+app.put('/id', (req, res) => {
+  const id = req.params
+  db.select('*').from('recept')
+    .where('id', req.body.id)
+    .then(allInfo => {
+      res.json(allInfo)
+    })
+})
 
 
 // connection
