@@ -52,6 +52,7 @@ app.post('/allinfo', (req, res) => {
     kommentar: req.body.kommentar,
     betyg: req.body.betyg,
     namn: req.body.namn,
+    totalabetygpoang: req.body.totalabetygpoang,
     datum: new Date()
   })
     .then(function () {
@@ -82,6 +83,22 @@ app.put('/id', (req, res) => {
       res.json(allInfo)
     })
 })
+
+//// Update Betyg /////
+app.put('/updatebetyg', (req, res) => {
+  const { id } = req.body;
+  db('recept').where('id', '=', id)
+  .increment('antalbetyg', 1)
+  .update({
+    betyg:req.body.betyg,
+    totalabetygpoäng: req.body.totalabetygpoäng
+})
+  .returning('antalbetyg')
+  .then(antalbetyg => {
+    res.json(antalbetyg[0].antalbetyg);
+  })
+  .catch(err => res.status(400).json('Error'))
+  })
 
 
 // connection
