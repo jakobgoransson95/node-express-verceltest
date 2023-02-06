@@ -91,7 +91,7 @@ app.put('/updatebetyg', (req, res) => {
   .increment('antalbetyg', 1)
   .update({
     betyg:req.body.betyg,
-    totalabetygpoäng: req.body.totalabetygpoäng
+    totalabetygpoang: req.body.totalabetygpoang
 })
   .returning('antalbetyg')
   .then(antalbetyg => {
