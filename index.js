@@ -52,6 +52,7 @@ app.post('/allinfo', (req, res) => {
     betyg: req.body.betyg,
     namn: req.body.namn,
     totalabetygpoang: req.body.totalabetygpoang,
+    mattyp: req.body.mattyp,
     datum: new Date()
   })
     .then(function () {
