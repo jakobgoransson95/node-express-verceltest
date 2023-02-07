@@ -1,8 +1,6 @@
 // Import packages
 const express = require("express");
 const home = require("./routes/home");
-
-const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
 
@@ -88,17 +86,17 @@ app.put('/id', (req, res) => {
 app.put('/updatebetyg', (req, res) => {
   const { id } = req.body;
   db('recept').where('id', '=', id)
-  .increment('antalbetyg', 1)
-  .update({
-    betyg:req.body.betyg,
-    totalabetygpoang: req.body.totalabetygpoang
+    .increment('antalbetyg', 1)
+    .update({
+      betyg: req.body.betyg,
+      totalabetygpoang: req.body.totalabetygpoang
+    })
+    .returning('antalbetyg')
+    .then(antalbetyg => {
+      res.json(antalbetyg[0].antalbetyg);
+    })
+    .catch(err => res.status(400).json('Error'))
 })
-  .returning('antalbetyg')
-  .then(antalbetyg => {
-    res.json(antalbetyg[0].antalbetyg);
-  })
-  .catch(err => res.status(400).json('Error'))
-  })
 
 
 // connection
