@@ -1,7 +1,7 @@
 // Import packages
 const express = require("express");
 const home = require("./routes/home");
-
+const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
 
