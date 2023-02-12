@@ -149,6 +149,14 @@ app.post('/register', (req, res) => {
     .catch(err => res.status(400).json("already registred"))
 })
 
+/////hämta users /////
+app.put('/users', (req, res) => {
+  const email = req.params
+  db.select('email').from('users')
+    .then(allInfo => {
+      res.json(allInfo)
+    })
+})
 
 // connection
 const port = process.env.PORT || 9001;
